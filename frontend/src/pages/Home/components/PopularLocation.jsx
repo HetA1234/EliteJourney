@@ -1,19 +1,14 @@
+/* eslint-disable react/prop-types */
 import ImageCard from './ImageCard';
 import ImageCardSkeleton from './ImageCardSkeleton';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PopularLocations = ({ popularDestinationsData }) => {
 	const navigate = useNavigate();
 
 	const onPopularDestincationCardClick = (city) => {
-		navigate('/hotels', {
-			state: {
-				city: city.toString().toLowerCase(),
-			},
-		});
+		navigate(`/hotels/city/${city.toString().toLowerCase()}`);
 	};
-
 	return (
 		<div className='my-4'>
 			<h2 className='text-3xl font-medium text-slate-700 dark:text-slate-200 text-center'>Book Hotels at Popular Destinations</h2>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useRef, useState } from 'react';
 
 import EmptyHotelsState from './EmptyHotelState';
@@ -66,7 +67,7 @@ const ResultsContainer = ({
 							Array.from({ length: 5 }, (_, index) => <HotelViewCardSkeleton key={index} />)
 						) : hotelsResults.data && hotelsResults.data.length > 0 ? (
 							hotelsResults.data.map((hotel) => (
-								<HotelViewCard key={hotel._id} id={hotel._id} title={hotel.name} image={hotel.imageUrls[0]} subtitle={hotel.description} benefits={hotel.facilities} ratings={hotel.starRating} price={123} />
+								<HotelViewCard key={hotel._id} id={hotel._id} title={hotel.name} image={hotel.imageUrls[0]} subtitle={hotel.description} benefits={hotel.facilities} ratings={hotel.starRating} price={hotel.pricePerNight} />
 							))
 						) : (
 							<EmptyHotelsState />

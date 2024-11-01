@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 
 import PopularLocations from './components/PopularLocation';
@@ -22,7 +21,7 @@ const Home = () => {
 	useEffect(() => {
 		const getInitialData = async () => {
 			try {
-				const popularDestinationsResponse = await fetch(`${apiUrl}/api/popularDestinations`, {
+				const popularDestinationsResponse = await fetch(`${apiUrl}/api/hotels/popularDestinations`, {
 					method: 'GET',
 				});
 				if (!popularDestinationsResponse.ok) {
@@ -43,14 +42,13 @@ const Home = () => {
 				});
 			}
 			try {
-				const hotelsResultsResponse = await fetch(`${apiUrl}/api/hotelsResults`, {
+				const hotelsResultsResponse = await fetch(`${apiUrl}/api/hotels/hotelsResults`, {
 					method: 'GET',
 				});
 				if (!hotelsResultsResponse.ok) {
 					throw new Error(`HTTP error! Status: ${hotelsResultsResponse.status}`);
 				}
 				const hotelsResultsData = await hotelsResultsResponse.json();
-				console.log(hotelsResultsData.data.elements);
 				setHotelsResultsData({
 					isLoading: false,
 					data: hotelsResultsData.data.elements,
@@ -64,7 +62,6 @@ const Home = () => {
 					errors: [errorMessage],
 				});
 			}
-			console.log(hotelsResultsData);
 		};
 
 		getInitialData();

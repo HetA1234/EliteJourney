@@ -1,9 +1,10 @@
-import { Check, Star } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from './ui/button';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import { Check } from 'lucide-react';
 import { StarFilledIcon } from '@radix-ui/react-icons';
-import { formatPrice } from '../lib/priceHelper';
 
 const HotelViewCard = (props) => {
 	const { id: hotelCode, image, title, subtitle, benefits, price, ratings } = props;
@@ -17,7 +18,7 @@ const HotelViewCard = (props) => {
 		<Link to={`/hotel/${hotelCode}`} className='block text-slate-700 hover:text-brand transition-colors duration-300'>
 			<div className=' cursor-pointer card border p-4 flex flex-col md:flex-row gap-x-2 w-full'>
 				<div>
-					<img src={image} alt={title} className=' w-full h-[200px] ' />
+					<img src={image} alt={title} className=' w-[300px] h-[300px]  bg-center ' />
 				</div>
 				<div className='flex flex-col justify-between ml-0 md:ml-2 flex-1'>
 					<div>
@@ -38,7 +39,7 @@ const HotelViewCard = (props) => {
 						<h4 className='font-medium text-sm   bg-brand p-2 flex justify-center items-center'>
 							{ratings} <StarFilledIcon />
 						</h4>
-						<p className=' font-bold whitespace-nowrap'>₹ {formatPrice(price)}</p>
+						<p className=' font-bold whitespace-nowrap'>${price}</p>
 					</div>
 					<Button variant={'outline'}>Book Now</Button>
 				</div>

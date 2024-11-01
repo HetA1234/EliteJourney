@@ -1,15 +1,19 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
+import AddHotel from './pages/AddHotel/AddHotel';
 import AuthGate from './components/AuthGate';
 import { AuthProvider } from './components/AuthProvider';
+import EditHotel from './pages/EditHotel/EditHotel';
 import Home from './pages/Home/Home';
 import Layout from './layout/Layout';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import { Toaster } from 'sonner';
 
 const App = () => {
 	return (
 		<AuthProvider>
+			<Toaster />
 			<Router>
 				<Routes>
 					{/* Home route */}
@@ -33,6 +37,7 @@ const App = () => {
 							</AuthGate>
 						}
 					/>
+
 					<Route
 						path='/signup'
 						element={
@@ -41,6 +46,23 @@ const App = () => {
 									<Signup />
 								</Layout>
 							</AuthGate>
+						}
+					/>
+
+					<Route
+						path='/add-hotel'
+						element={
+							<Layout>
+								<AddHotel />
+							</Layout>
+						}
+					/>
+					<Route
+						path='/edit/:hotelId'
+						element={
+							<Layout>
+								<EditHotel />
+							</Layout>
 						}
 					/>
 				</Routes>

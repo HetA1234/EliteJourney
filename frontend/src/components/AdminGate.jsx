@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import React from 'react';
 import { useAuth } from './AuthProvider';
 
-const AuthGate = ({ children }) => {
+const AdminGate = ({ children }) => {
 	const { isLoggedIn, loading } = useAuth();
 
 	if (loading) {
@@ -12,10 +12,9 @@ const AuthGate = ({ children }) => {
 	}
 
 	if (isLoggedIn) {
-		return <Navigate to='/' />;
+		return children;
 	}
-
-	return children;
+	return <Navigate to='/' />;
 };
 
-export default AuthGate;
+export default AdminGate;

@@ -18,10 +18,9 @@ const Signup = () => {
 					title: `Password Doesn't match`,
 				});
 			} else {
-				console.log(`${apiUrl}/api/saveUser`);
 				const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 				const user = userCredential.user;
-				const response = await fetch(`${apiUrl}/api/saveUser`, {
+				const response = await fetch(`${apiUrl}/api/users/saveUser`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
