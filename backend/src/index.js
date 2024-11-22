@@ -5,6 +5,7 @@ import { v2 as cloudinary } from 'cloudinary';
 import { config } from 'dotenv';
 import cors from 'cors';
 import hotelRoutes from './routes/hotels.js';
+import myBookingRoutes from './routes/my-booking.js';
 import myHotelRoutes from './routes/my-hotels.js';
 import userRoutes from './routes/users.js';
 
@@ -34,6 +35,7 @@ app.use(cors(corsOptions));
 app.use('/api/users', userRoutes);
 app.use('/api/hotels', hotelRoutes);
 app.use('/api/my-hotels', myHotelRoutes);
+app.use('/api/my-bookings', myBookingRoutes);
 
 app.listen(8000, () => {
 	console.log('server running on localhost:8000');

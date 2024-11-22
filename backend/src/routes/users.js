@@ -2,7 +2,18 @@ import User from '../models/user.js';
 import express from 'express';
 
 const router = express.Router();
-
+router.get('/me/:id', async (req, res) => {
+	try {
+		const user = await User.findOne({ uid: req.params.id });
+		if (!user) {
+			return res.status(400).json({ message: 'User not found' });
+		}
+		res.json(user);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: 'something went wrong' });
+	}
+});
 router.post('/saveUser', async (req, res) => {
 	try {
 		const { uid, email } = req.body;
