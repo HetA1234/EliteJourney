@@ -1,5 +1,7 @@
 import * as apiClient from '../api-client';
 
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import FacilitiesFilter from '../components/FacilitiesFilter';
 import HotelTypesFilter from '../components/HotelTypesFilter';
 import Pagination from '../components/Pagination';
@@ -7,24 +9,36 @@ import PriceFilter from '../components/PriceFilter';
 import SearchResultsCard from '../components/SearchResultsCard';
 import StarRatingFilter from '../components/StarRatingFilter';
 import { useQuery } from 'react-query';
-import { useSearchContext } from '../contexts/SearchContext';
 import { useState } from 'react';
 
 const SearchPage = () => {
-	const search = useSearchContext();
-	const [page, setPage] = useState(1);
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	// Extract query parameters from the URL
+	const params = new URLSearchParams(location.search);
+	const query = params.get('query') || '';
+	const destination = params.get('destination') || '';
+	const checkIn = params.get('checkIn') || '';
+	const checkOut = params.get('checkOut') || '';
+	const adultCount = params.get('adultCount') || '1';
+	const childCount = params.get('childCount') || '0';
+	const page = parseInt(params.get('page')) || 1;
+
 	const [selectedStars, setSelectedStars] = useState([]);
 	const [selectedHotelTypes, setSelectedHotelTypes] = useState([]);
 	const [selectedFacilities, setSelectedFacilities] = useState([]);
 	const [selectedPrice, setSelectedPrice] = useState();
 	const [sortOption, setSortOption] = useState('');
 
+	// Building search params based on URL and selected filters
 	const searchParams = {
-		destination: search.destination,
-		checkIn: search.checkIn.toISOString(),
-		checkOut: search.checkOut.toISOString(),
-		adultCount: search.adultCount.toString(),
-		childCount: search.childCount.toString(),
+		query,
+		destination,
+		checkIn,
+		checkOut,
+		adultCount,
+		childCount,
 		page: page.toString(),
 		stars: selectedStars,
 		types: selectedHotelTypes,
@@ -33,25 +47,40 @@ const SearchPage = () => {
 		sortOption,
 	};
 
-	const { data: hotelData } = useQuery(['searchHotels', searchParams], () => apiClient.searchHotels(searchParams));
+	// Fetch hotel data using react-query
+	const { data: hotelData, isLoading } = useQuery(['searchHotels', searchParams], () => apiClient.searchHotels(searchParams));
 
 	const handleStarsChange = (event) => {
 		const starRating = event.target.value;
-
 		setSelectedStars((prevStars) => (event.target.checked ? [...prevStars, starRating] : prevStars.filter((star) => star !== starRating)));
 	};
 
 	const handleHotelTypeChange = (event) => {
 		const hotelType = event.target.value;
-
 		setSelectedHotelTypes((prevHotelTypes) => (event.target.checked ? [...prevHotelTypes, hotelType] : prevHotelTypes.filter((hotel) => hotel !== hotelType)));
 	};
 
 	const handleFacilityChange = (event) => {
 		const facility = event.target.value;
-
 		setSelectedFacilities((prevFacilities) => (event.target.checked ? [...prevFacilities, facility] : prevFacilities.filter((prevFacility) => prevFacility !== facility)));
 	};
+
+	// Handle page change and update the URL query string accordingly
+	const handlePageChange = (newPage) => {
+		const newParams = new URLSearchParams(location.search);
+		newParams.set('page', newPage);
+		navigate(`?${newParams.toString()}`);
+	};
+
+	// Handle sorting option change
+	const handleSortChange = (event) => {
+		setSortOption(event.target.value);
+		const newParams = new URLSearchParams(location.search);
+		newParams.set('sortOption', event.target.value);
+		navigate(`?${newParams.toString()}`);
+	};
+
+	if (isLoading) return <p>Loading...</p>;
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5'>
@@ -68,9 +97,10 @@ const SearchPage = () => {
 				<div className='flex justify-between items-center'>
 					<span className='text-xl font-bold'>
 						{hotelData?.pagination.total} Hotels found
-						{search.destination ? ` in ${search.destination}` : ''}
+						{destination ? ` in ${destination}` : ''}
+						{query ? ` in ${query}` : ''}
 					</span>
-					<select value={sortOption} onChange={(event) => setSortOption(event.target.value)} className='p-2 border rounded-md'>
+					<select value={sortOption} onChange={handleSortChange} className='p-2 border rounded-md dark:bg-slate-800 dark:text-gray-300'>
 						<option value=''>Sort By</option>
 						<option value='starRating'>Star Rating</option>
 						<option value='pricePerNightAsc'>Price Per Night (low to high)</option>
@@ -81,7 +111,7 @@ const SearchPage = () => {
 					<SearchResultsCard hotel={hotel} key={hotel.id} />
 				))}
 				<div>
-					<Pagination page={hotelData?.pagination.page || 1} pages={hotelData?.pagination.pages || 1} onPageChange={(page) => setPage(page)} />
+					<Pagination page={hotelData?.pagination.page || 1} pages={hotelData?.pagination.pages || 1} onPageChange={handlePageChange} />
 				</div>
 			</div>
 		</div>

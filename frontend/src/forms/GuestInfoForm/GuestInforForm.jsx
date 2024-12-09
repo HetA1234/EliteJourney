@@ -40,7 +40,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }) => {
 
 	const onSignInClick = (data) => {
 		search.saveSearchValues('', data.checkIn, data.checkOut, data.adultCount, data.childCount);
-		navigate('/sign-in', { state: { from: location } });
+		navigate('/login', { state: { from: location } });
 	};
 
 	const onSubmit = (data) => {

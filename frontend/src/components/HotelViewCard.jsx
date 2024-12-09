@@ -1,18 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom';
-
 import { Button } from './ui/button';
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { StarFilledIcon } from '@radix-ui/react-icons';
+import { useAuth } from './AuthProvider';
 
 const HotelViewCard = (props) => {
 	const { id: hotelCode, image, title, subtitle, benefits, price, ratings } = props;
-	const navigate = useNavigate();
-
-	const onBookNowClick = () => {
-		navigate(`/hotel/${hotelCode}`);
-	};
+	const { admin } = useAuth();
 
 	return (
 		<Link to={`/hotel/${hotelCode}`} className='block text-slate-700 hover:text-brand transition-colors duration-300'>
@@ -42,6 +37,11 @@ const HotelViewCard = (props) => {
 						<p className=' font-bold whitespace-nowrap'>${price}</p>
 					</div>
 					<Button variant={'outline'}>Book Now</Button>
+					{admin && (
+						<Link to={`/edit/${hotelCode}`}>
+							<Button variant={'outline'}>Edit Hotel</Button>
+						</Link>
+					)}
 				</div>
 			</div>
 		</Link>

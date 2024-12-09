@@ -191,7 +191,10 @@ router.post('/:hotelId/bookings', async (req, res) => {
 
 const constructSearchQuery = (queryParams) => {
 	let constructedQuery = {};
-
+	console.log(queryParams);
+	if (queryParams.query) {
+		constructedQuery.$or = [{ name: new RegExp(queryParams.query, 'i') }, { city: new RegExp(queryParams.query, 'i') }, { country: new RegExp(queryParams.query, 'i') }];
+	}
 	if (queryParams.destination) {
 		constructedQuery.$or = [{ city: new RegExp(queryParams.destination, 'i') }, { country: new RegExp(queryParams.destination, 'i') }];
 	}
@@ -231,7 +234,7 @@ const constructSearchQuery = (queryParams) => {
 			$lte: parseInt(queryParams.maxPrice).toString(),
 		};
 	}
-
+	console.log(constructedQuery);
 	return constructedQuery;
 };
 

@@ -7,6 +7,7 @@ import cors from 'cors';
 import hotelRoutes from './routes/hotels.js';
 import myBookingRoutes from './routes/my-booking.js';
 import myHotelRoutes from './routes/my-hotels.js';
+import path from 'path';
 import userRoutes from './routes/users.js';
 
 config();
@@ -24,9 +25,8 @@ const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
 
-
 const corsOptions = {
-	origin: 'http://localhost:5173', // or your frontend URL
+	origin: ['http://localhost:5173', 'https://eliteexpress.onrender.com/'],
 	methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
 	credentials: true,
 };

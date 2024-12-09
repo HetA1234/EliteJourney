@@ -30,7 +30,7 @@ const SearchResultsCard = ({ hotel }) => {
 				<div className='grid grid-cols-2 items-end whitespace-nowrap'>
 					<div className='flex gap-1 items-center'>
 						{hotel.facilities.slice(0, 3).map((facility, index) => (
-							<span key={index} className='bg-slate-300 p-2 rounded-lg font-bold text-xs whitespace-nowrap'>
+							<span key={index} className='bg-slate-300 dark:bg-gray-800 p-2 rounded-lg font-bold text-xs whitespace-nowrap'>
 								{facility}
 							</span>
 						))}
