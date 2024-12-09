@@ -23,6 +23,12 @@ cloudinary.config({
 const app = express();
 app.use(json());
 app.use(urlencoded({ extended: true }));
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+});
 
 const corsOptions = {
 	origin: 'http://localhost:5173', // or your frontend URL
