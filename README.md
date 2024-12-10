@@ -2,7 +2,7 @@
 
 EliteJourney is a full-stack web application that allows users to search for and book hotel rooms, view and explore various travel destinations, and plan their itineraries. It also provides a management system for travel agencies and hotel management to handle bookings, hotels, and tour packages.
 ## Live Link
-[https://github.com/HetA1234/EliteJourney](https://eliteexpress.onrender.com/)
+[https://eliteexpress.onrender.com/](https://eliteexpress.onrender.com/)
 
 The application is built using the MERN stack (MongoDB, Express.js, React.js, Node.js) and integrates Cloudinary for image uploads.
 
