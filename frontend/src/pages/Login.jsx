@@ -2,6 +2,8 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { useToast } from '../hooks/use-toast';
+import { Link } from 'react-router-dom';
+
 
 const Login = () => {
 	const [email, setEmail] = useState('');
@@ -79,9 +81,9 @@ const Login = () => {
 								</div>
 							</form>
 							<p>
-								<a href='/signup' className='font-medium text-zinc-950 dark:text-white text-sm'>
-									Don't have an account? Sign up
-								</a>
+								<Link to="/signup" className="font-medium text-zinc-950 dark:text-white text-sm">
+								  Don't have an account? Sign up
+								</Link>
 							</p>
 						</div>
 					</div>
