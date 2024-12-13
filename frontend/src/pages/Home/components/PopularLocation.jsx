@@ -7,7 +7,7 @@ const PopularLocations = ({ popularDestinationsData }) => {
 	const navigate = useNavigate();
 
 	const onPopularDestincationCardClick = (city) => {
-		navigate(`/hotels/city/${city.toString().toLowerCase()}`);
+		navigate(`/search?destination=${city.toString().toLowerCase()}`);
 	};
 	return (
 		<div className='my-4'>
